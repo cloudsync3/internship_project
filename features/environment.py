@@ -11,7 +11,7 @@ from app.application import Application
 # from webdriver_manager.firefox import GeckoDriverManager
 
 
-def browser_init(context):
+def browser_init(context, scenario_name):
     """
     :param context: Behave context
     """
@@ -19,12 +19,28 @@ def browser_init(context):
     driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
     context.driver = webdriver.Chrome(service=service)
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--window-size=1920x1080")
-    service = Service(ChromeDriverManager().install())
-    context.driver = webdriver.Chrome(service=service, options=options)
 
+
+    # Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
+    bs_user = 'darianesterova_aszJix'
+    bs_key = 'Mapkzz4zFCk4kQtpPW45'
+    url = f'https://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+
+    options = Options()
+    bstack_options = {
+         "os" : "Windows",
+         "osVersion" : "11",
+         'browserName': 'chrome',
+         'sessionName': scenario_name,
+    }
+    options.set_capability('bstack:options', bstack_options)
+    context.driver = webdriver.Remote(command_executor=url, options=options)
+
+    # options = webdriver.ChromeOptions()
+    # # options.add_argument("--headless=new")
+    # # options.add_argument("--window-size=1920x1080")
+    # # service = Service(ChromeDriverManager().install())
+    # context.driver = webdriver.Chrome(service=service, options=options)
 
     # Firefox
     # firefox_options = Options()
@@ -40,8 +56,9 @@ def browser_init(context):
 
 
 def before_scenario(context, scenario):
+    scenario_name = scenario.name
     print('\nStarted scenario: ', scenario.name)
-    browser_init(context)
+    browser_init(context, scenario_name)
 
 
 def before_step(context, step):
@@ -53,5 +70,6 @@ def after_step(context, step):
         print('\nStep failed: ', step)
 
 
-def after_scenario(context, feature):
-    context.driver.quit()
+def after_scenario(context, scenario):
+    if hasattr(context, 'driver'):  # Check if 'driver' exists
+        context.driver.quit()

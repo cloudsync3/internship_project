@@ -5,8 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 class LoginPage(BasePage):
-    # USERNAME = (By.ID, "email-2")
-    USERNAME = (By.CSS_SELECTOR, "input[data-name='Email 2']")
+    USERNAME = (By.ID, "email-2")
+    # USERNAME = (By.CSS_SELECTOR, "input[data-name='Email 2']")
     PASSWORD = (By.ID, "field")
     LOGIN_BUTTON = (By.XPATH, "//a[@wized='loginButton']")
 
