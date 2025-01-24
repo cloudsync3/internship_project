@@ -11,7 +11,7 @@ from app.application import Application
 # from webdriver_manager.firefox import GeckoDriverManager
 
 
-def browser_init(context, scenario_name):
+def browser_init(context):
     """
     :param context: Behave context
     """
@@ -22,19 +22,19 @@ def browser_init(context, scenario_name):
 
 
     # Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
-    bs_user = 'darianesterova_aszJix'
-    bs_key = 'Mapkzz4zFCk4kQtpPW45'
-    url = f'https://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-
-    options = Options()
-    bstack_options = {
-         "os" : "Windows",
-         "osVersion" : "11",
-         'browserName': 'chrome',
-         'sessionName': scenario_name,
-    }
-    options.set_capability('bstack:options', bstack_options)
-    context.driver = webdriver.Remote(command_executor=url, options=options)
+    # bs_user = 'darianesterova_aszJix'
+    # bs_key = 'Mapkzz4zFCk4kQtpPW45'
+    # url = f'https://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    #
+    # options = Options()
+    # bstack_options = {
+    #      "os" : "Windows",
+    #      "osVersion" : "11",
+    #      'browserName': 'chrome',
+    #      'sessionName': scenario_name,
+    # }
+    # options.set_capability('bstack:options', bstack_options)
+    # context.driver = webdriver.Remote(command_executor=url, options=options)
 
     # options = webdriver.ChromeOptions()
     # # options.add_argument("--headless=new")
@@ -58,7 +58,7 @@ def browser_init(context, scenario_name):
 def before_scenario(context, scenario):
     scenario_name = scenario.name
     print('\nStarted scenario: ', scenario.name)
-    browser_init(context, scenario_name)
+    browser_init(context)
 
 
 def before_step(context, step):
