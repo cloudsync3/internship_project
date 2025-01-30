@@ -14,32 +14,48 @@ class MainPage(BasePage):
 
     def open_main(self):
         self.open_url('https://soft.reelly.io')
-        sleep(4)
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(self.SETTINGS_BTN)
+        )
+
 
     def setting_option(self):
-        self.driver.find_element(*self.SETTINGS_BTN).click()
-        sleep(2)
+        # self.driver.find_element(*self.SETTINGS_BTN).click()
+        # sleep(2)
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.SETTINGS_BTN)
+        ).click()
+
 
     def support_option(self):
-        self.driver.find_element(*self.SUPPORT_BTN).click()
-        sleep(3)
+        # self.driver.find_element(*self.SUPPORT_BTN).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.SUPPORT_BTN)
+        ).click()
+
 
     def switch_to_new_tab(self):
         sleep(2)
         self.driver.switch_to.window(self.driver.window_handles[1])
 
     def verify_whatsapp_page(self):
-        self.driver.find_element(*self.WHATSAPP_VERIFY)
+        # self.driver.find_element(*self.WHATSAPP_VERIFY)
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(self.WHATSAPP_VERIFY)
+        )
 
     def go_back_previous_page(self):
-        sleep(2)
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
+        sleep(2)
 
     def click_on_news_option(self):
-        self.wait_for_element_visible(*self.TME_NEWS)
-        self.scroll_to_element(self.TME_NEWS)
-        self.driver.find_element(*self.TME_NEWS).click()
+        # self.wait_for_element_visible(*self.TME_NEWS)
+        # self.scroll_to_element(self.TME_NEWS)
+        # self.driver.find_element(*self.TME_NEWS).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.TME_NEWS)
+        ).click()
 
     def verify_tele_news_page(self):
         WebDriverWait(self.driver, 10).until(

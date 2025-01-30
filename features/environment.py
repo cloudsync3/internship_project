@@ -21,6 +21,8 @@ def browser_init(context):
     context.driver = webdriver.Chrome(service=service)
 
 
+
+
     # Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
     # bs_user = 'darianesterova_aszJix'
     # bs_key = 'Mapkzz4zFCk4kQtpPW45'
