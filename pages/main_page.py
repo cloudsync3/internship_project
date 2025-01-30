@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
@@ -22,16 +23,36 @@ class MainPage(BasePage):
     def setting_option(self):
         # self.driver.find_element(*self.SETTINGS_BTN).click()
         # sleep(2)
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.SETTINGS_BTN)
-        ).click()
+        # WebDriverWait(self.driver, 10).until(
+        #     EC.element_to_be_clickable(self.SETTINGS_BTN)
+        # ).click()
+        WebDriverWait(self.driver, 15).until(
+            EC.presence_of_element_located(self.SETTINGS_BTN)
+        )
+        elements = self.driver.find_elements(*self.SETTINGS_BTN)
+        button = elements[0]
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
+        try:
+            WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(self.SETTINGS_BTN)).click()
+        except:
+            self.driver.execute_script("arguments[0].click();", button)
 
 
     def support_option(self):
         # self.driver.find_element(*self.SUPPORT_BTN).click()
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.SUPPORT_BTN)
-        ).click()
+        # WebDriverWait(self.driver, 10).until(
+        #     EC.element_to_be_clickable(self.SUPPORT_BTN)
+        # ).click()
+        WebDriverWait(self.driver, 15).until(
+            EC.presence_of_element_located(self.SUPPORT_BTN)
+        )
+        elements = self.driver.find_elements(*self.SUPPORT_BTN)
+        button = elements[0]
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
+        try:
+            WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(self.SUPPORT_BTN)).click()
+        except:
+            self.driver.execute_script("arguments[0].click();", button)
 
 
     def switch_to_new_tab(self):
@@ -53,7 +74,7 @@ class MainPage(BasePage):
         # self.wait_for_element_visible(*self.TME_NEWS)
         # self.scroll_to_element(self.TME_NEWS)
         # self.driver.find_element(*self.TME_NEWS).click()
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 15).until(
             EC.element_to_be_clickable(self.TME_NEWS)
         ).click()
 
